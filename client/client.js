@@ -36,6 +36,83 @@ const Table = {
            board: [Array] },
         currentPlayer: undefined }
 
+
+//============================================
+//                 player logic
+//============================================
+function fold()
+{
+  player.folded = true;
+  player.talked = false;
+  player.allIn= false; //from wikipedia, a fold can be done even after an all in
+  player.turnBet={action: "folded", playerName: playerName, amount: 0};//TODO: make sure this is correct
+  player.chips= player.chips//amount stays the same 
+
+ //TODO:Send to server?
+
+}
+
+
+
+//takes from the server the max bet,   and removes the amount from the players cach
+function call(maxBet) //TODO: needs to recive MaxBet from the server first
+{
+
+  player.talked=true;
+  
+  player.turnBet={action:"call", playerName: player.playerName, amount: maxBet};
+
+  player.chips -= maxBet;
+
+
+  //TODO:Send to server?
+}
+
+
+//will answer if the call button needs to be rendered
+function CanPlayerCall(maxBet)
+{
+  if(player.allIn || player.folded)
+  {return false;}
+
+  if(player.chips < maxBet)
+  {
+    return false;
+  }
+
+  
+  return true;
+
+}
+
+
+function allIn()
+{
+  player.allIn = true;
+  palyer.talked= ture; //acroding to node-poker.js line 1050
+  
+  player.turnBet={action:"allin" , playerName: player.playerName, amount: player.chips};
+  player.chips=0;
+
+  //TODO:Send to server?
+}
+
+
+
+
+
+
+
+//===========================================
+//                 sockets
+//===========================================
+
+//things that need reciving:      getMaxBet
+
+
+
+
+
   // add player
   socket.on('startSession', function add_player(socket){
     const name = prompt("Please enter your name", "Write Here");
@@ -63,6 +140,12 @@ const Table = {
       socket.emit("turnAction", Player.turnAction)
     }
   });
+
+
+
+
+
+
 
   // show me the result of the turn
   socket.on('TurnResult', function turn(socket, TableObject){

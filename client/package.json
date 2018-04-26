@@ -2,14 +2,17 @@
   "name": "gametable-client",
   "version": "0.0.1",
   "description": "HackIDC Team 69 Client",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./server/easyrtc-server.js"
   },
   "start": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dafna1228/hackidcteam69.git"
+  },
+  "dependencies": {
+    "networked-aframe": "^0.5.0"
   },
   "keywords": [
     "aframe",

@@ -2,16 +2,15 @@ let socket = io('http://localhost');
 socket.on("playerLogin", (data) =>{
     const playerManager = AFRAME.scenes[0].components['player-manager'];
     playerManager.addPlayer(data);
-    playerManager.setPlayerName(data.playerName, data.playerId);
+    playerManager.setPlayerName(data);
 })
 socket.on("removePlayer", (data) =>{
     const playerManager = AFRAME.scenes[0].components['player-manager'];
 
     playerManager.removePlayer(data);
 })
-socket.on("updateGameData", (data) => {
+socket.on("updatePlayerRotation", (data) => {
     const playerManager = AFRAME.scenes[0].components['player-manager'];
-
-    playerManager.updateGameData(data.gameData);  
+    playerManager.updatePlayerRotation(data);  
 })
 //TODO: Add a listener for player leaving

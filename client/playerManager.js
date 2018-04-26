@@ -16,7 +16,7 @@ const playerPositions = {
     rotation: '0 0 0'
   },
   player2: {
-    position: '-1 -1 -1',
+    position: '5 0 -5',
     rotation: '0 90 0'
   },
 }
@@ -30,42 +30,49 @@ AFRAME.registerComponent('player-manager', {
     this.player = document.getElementById('player');
     this.playerId = makeid();
     this.gameData = {};
+    this.rotation = new THREE.Vector3();
     this.bindMethods();
     socket.emit('newPlayer', {playerId: this.playerId});
   },
 
   bindMethods: function () {
-    this.setPlayerId = bind(this.setPlayerName, this);
+    this.setPlayerName = bind(this.setPlayerName, this);
     this.addPlayer = bind(this.addPlayer, this);
     this.removePlayer = bind(this.removePlayer, this);
-    this.updateGameData = bind(this.updateGameData, this);
-    this.getPlayerData = bind(this.getPlayerData, this);
+    this.updatePlayerRotation = bind(this.updatePlayerRotation, this);
+    this.updateRotation = bind(this.updateRotation, this);
   },
 
-  setPlayerName: function (playerName, id) {
-    if(id === this.playerId) {
+  setPlayerName: function (data) {
+    const {playerName, playerId, players} = data;
+    if(playerId === this.playerId) {
       this.playerName = playerName;
       this.player.setAttribute('position', playerPositions[this.playerName].position);
       this.player.setAttribute('rotation', playerPositions[this.playerName].rotation);
-      let playerData = this.getPlayerData();
-      if(playerData){
-        socket.emit('updatePlayerData', playerData);
+      for(let player in players){
+        const playerData = players[player];
+        if(playerData.playerId && playerData.playerId !== playerId){
+          this.addPlayer({playerName: player, playerId: playerData.playerId});
+        }
       }
+      setInterval(this.updateRotation, 24);
     }
   },
 
   addPlayer: function (newPlayer){
-    if(this.playerId !== newPlayer.playerId) {
+    const {playerName, playerId} = newPlayer;
+    if(this.playerId !== playerId) {
       let newPlayerRig = document.createElement('a-entity');
-      newPlayerRig.setAttribute('id', newPlayer.playerName);
-      newPlayerRig.setAttribute('name', newPlayer.playerName);
+      newPlayerRig.setAttribute('id', playerName);
+      newPlayerRig.setAttribute('name', playerName);
       newPlayerRig.setAttribute('position', playerPositions[playerName].position);
-      newPlayerRig.setAttribute('rotation', playerPositions[this.playerName].rotation);
+      newPlayerRig.setAttribute('rotation', playerPositions[playerName].rotation);
       let newPlayer = document.createElement('a-box');
-      newPlayerRig.setAttribute('id', newPlayer.playerId);
+      newPlayer.setAttribute('id', playerId);
       newPlayer.setAttribute('rotation', newPlayer.rotation);
-      this.newPlayerRig.appendChild(newPlayer);
-      this.el.appendChild(newPlayer);
+      newPlayer.setAttribute('material', 'color: red');
+      newPlayerRig.appendChild(newPlayer);
+      this.el.appendChild(newPlayerRig);
     }
   },
 
@@ -76,32 +83,20 @@ AFRAME.registerComponent('player-manager', {
     }
   },
 
-  updateGameData: function (gameData) {
-    this.gameData = gameData;
-  },
-
-  tick: function (){
-    //update positions
-    
-    const playerTransforms = this.gameData.playerTransforms;
-    for(let player in playerTransforms){
-      const playerData = playerTransforms[player];
-      let playerEntity = document.getElementById(playerData.playerId);
-      playerEntity.setAttribute('rotation',playerData.rotation)
-    }
-
-    // update all player game data (money, whatever)
-
-    // update game state (who's turn)
+  updatePlayerRotation: function (data) {
+    const {playerId, rotation} = data;
+    let playerEntity = document.getElementById(playerId);
+    if(this.playerId !== playerId)
+      if(playerEntity){
+        playerEntity.setAttribute('rotation',rotation);
+      }
     },
 
-  getPlayerData: function (){
+  updateRotation: function (){
     let camera = document.getElementById('camera');
-    let newRotation = camera.getAttribute('rotation');
-    if(this.rotation !== newRotation){
-      this.rotation = newRotation;
-      return {playerId: this.playerId, newRotation};
+    const newRotation = camera.getAttribute('rotation');
+    if(this.playerId && this.playerName){
+      socket.emit('updateRotation',{playerId: this.playerId, rotation: newRotation, playerName: this.playerName});
     }
-    return null;
   }
 });

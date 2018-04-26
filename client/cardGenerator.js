@@ -4,7 +4,7 @@ AFRAME.registerComponent('playcard', {
     },
 
     getFront: function (name) {
-        this.data.name = 
+        return;
     },
   
     init: function () {

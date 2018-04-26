@@ -21,7 +21,7 @@ const playerPositions = {
   },
 }
 
-AFRAME.registerComponent('playerManager', {
+AFRAME.registerComponent('player-manager', {
   schema: {
     radius: {type: 'number', default: 1}
   },
@@ -29,8 +29,9 @@ AFRAME.registerComponent('playerManager', {
   init: function() {
     this.player = document.getElementById('player');
     this.playerId = makeid();
+    this.gameData = {};
     this.bindMethods();
-    socket.emit('newPlayer', {id: playerId});
+    socket.emit('newPlayer', {playerId: this.playerId});
   },
 
   bindMethods: function () {
@@ -38,7 +39,7 @@ AFRAME.registerComponent('playerManager', {
     this.addPlayer = bind(this.addPlayer, this);
     this.removePlayer = bind(this.removePlayer, this);
     this.updateGameData = bind(this.updateGameData, this);
-    this.getPlayerData = bind(this.removePlayer, this);
+    this.getPlayerData = bind(this.getPlayerData, this);
   },
 
   setPlayerName: function (playerName, id) {
@@ -46,9 +47,9 @@ AFRAME.registerComponent('playerManager', {
       this.playerName = playerName;
       this.player.setAttribute('position', playerPositions[this.playerName].position);
       this.player.setAttribute('rotation', playerPositions[this.playerName].rotation);
-      let playerData = getPlayerData();
+      let playerData = this.getPlayerData();
       if(playerData){
-        emit('updatePlayerData', playerData);
+        socket.emit('updatePlayerData', playerData);
       }
     }
   },
@@ -98,7 +99,6 @@ AFRAME.registerComponent('playerManager', {
     let camera = document.getElementById('camera');
     let newRotation = camera.getAttribute('rotation');
     if(this.rotation !== newRotation){
-      this.position = newPosition;
       this.rotation = newRotation;
       return {playerId: this.playerId, newRotation};
     }

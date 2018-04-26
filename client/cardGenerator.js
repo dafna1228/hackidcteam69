@@ -14,7 +14,7 @@ AFRAME.registerComponent("playcard", {
     let data = this.data;
     let el = this.el;
 
-    this.geometry = new THREE.PlaneGeometry(6.35, 8.89, 1, 1);
+    this.geometry = new THREE.PlaneGeometry(1.05, 1.6, 1, 1);
 
     this.textureFront = new THREE.TextureLoader().load(
       this.getFront(this.data.name).toString(),

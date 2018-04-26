@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello, WebVR! - A-Frame</title>
+    <meta name="description" content="Hello, WebVR! - A-Frame">
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+        <a-assets>
+                <a-asset-item id="crate-obj" src="pokertable.obj"></a-asset-item>
+        </a-assets>
+        <a-obj-model position=" -1 -5 -1" scale="0.01 0.01 0.01" src="#crate-obj" />
+    </a-scene>
+  </body>
+</html>

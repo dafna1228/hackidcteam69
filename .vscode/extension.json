@@ -1,0 +1,39 @@
+{
+  // See http://go.microsoft.com/fwlink/?LinkId=827846
+  // for the documentation about the extensions.json format
+  "recommendations": [
+    // Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
+    "CoenraadS.bracket-pair-colorizer",
+    "PKief.material-icon-theme",
+    "Shan.code-settings-sync",
+    "Zignd.html-css-class-completion",
+    "abusaidm.html-snippets",
+    "alefragnani.Bookmarks",
+    "alefragnani.project-manager",
+    "christian-kohler.npm-intellisense",
+    "christian-kohler.path-intellisense",
+    "chrmarti.regex",
+    "cssho.vscode-svgviewer",
+    "cvarisco.vs-component-app",
+    "dbaeumer.vscode-eslint",
+    "dbankier.vscode-instant-markdown",
+    "deerawan.vscode-dash",
+    "donjayamanne.githistory",
+    "eamodio.gitlens",
+    "eg2.vscode-npm-script",
+    "esbenp.prettier-vscode",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag",
+    "formulahendry.code-runner",
+    "msjsdiag.debugger-for-chrome",
+    "naumovs.color-highlight",
+    "ritwickdey.LiveServer",
+    "shinnn.stylelint",
+    "timothymclane.react-redux-es6-snippets",
+    "wayou.vscode-todo-highlight",
+    "wmaurer.change-case",
+    "xabikos.ReactSnippets",
+    "zhuangtongfa.Material-theme",
+    "jpoissonnier.vscode-styled-components"
+  ]
+}

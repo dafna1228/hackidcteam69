@@ -1,0 +1,88 @@
+{
+  // Place your settings in this file to overwrite default and user settings.
+  "files.associations": {
+    "**/src/**/*.js": "javascriptreact",
+    "**/node_modules/**/*.js": "javascript",
+    ".babelrc": "json",
+    ".eslintignore": "gitignore",
+    "*.js": "javascriptreact"
+  },
+  "files.exclude": {
+    ".vscode/chrome/**": true,
+    "**/node_modules/[^@]*": true,
+    "**/node_modules/?[^h]*": true,
+    "**/node_modules/??[^a]*": true,
+    "**/node_modules/???[^l]*": true,
+    "**/node_modules/????[^o]*": true,
+    "**/node_modules/?????[^l]*": true,
+    "**/node_modules/??????[^a]*": true,
+    "**/node_modules/???????[^b]*": true,
+    "**/node_modules/????????[^s]*": true
+  },
+  "files.watcherExclude": {
+    ".vscode/chrome/**": true,
+    "**/node_modules/[^@]*": true,
+    "**/node_modules/?[^h]*": true,
+    "**/node_modules/??[^a]*": true,
+    "**/node_modules/???[^l]*": true,
+    "**/node_modules/????[^o]*": true,
+    "**/node_modules/?????[^l]*": true,
+    "**/node_modules/??????[^a]*": true,
+    "**/node_modules/???????[^b]*": true,
+    "**/node_modules/????????[^s]*": true
+  },
+  "html.format.extraLiners": "!",
+  "html.format.indentInnerHtml": true,
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "/package.json"
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "config": {
+            "properties": {
+              "port": {
+                "type": "number",
+                "description": "The port of the webpack-dev-server",
+                "default": 3333
+              },
+              "host": {
+                "type": "string",
+                "description": "The hostname or ip of the webpack-dev-server",
+                "default": "localhost"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "search.exclude": {
+    "production/**": true,
+    "node_modules": true,
+    "**/node_modules/[^@]*": true,
+    "**/node_modules/?[^h]*": true,
+    "**/node_modules/??[^a]*": true,
+    "**/node_modules/???[^l]*": true,
+    "**/node_modules/????[^o]*": true,
+    "**/node_modules/?????[^l]*": true,
+    "**/node_modules/??????[^a]*": true,
+    "**/node_modules/???????[^b]*": true,
+    "**/node_modules/????????[^s]*": true
+  },
+  "javascript.format.enable": false,
+  "prettier.eslintIntegration": true,
+  "prettier.trailingComma": "all",
+  "stylelint.enable": true,
+  "css.validate": false,
+  "scss.validate": false,
+  "editor.wordWrap": "off",
+  "workbench.colorCustomizations": {
+    "[Default Dark+]": {
+      "activityBar.foreground": "#CFCBF1"
+    }
+  },
+  "workbench.colorTheme": "Default Dark+"
+}

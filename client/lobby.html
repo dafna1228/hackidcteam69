@@ -4,14 +4,19 @@
     <title>Hello, WebVR! - A-Frame</title>
     <meta name="description" content="Hello, WebVR! - A-Frame">
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>    
     <script src="tableCenter.js"></script>
+    <script src="clientSocket.js"></script>
+    <script src="playerManager.js"></script>
   </head>
   <body>
-    <a-scene>
+    <a-scene player-manager>
         <a-assets>
             <img id="sky" src="./Assets/images/table-skybox.jpg">
             <a-asset-item id="logo-obj" src="./Assets/models/Logo/Logo.obj"></a-asset-item>
             <a-asset-item id="logo-mtl" src="./Assets/models/Logo/Logo.mtl"></a-asset-item>
+            <a-asset-item id="racoon-obj" src="./Assets/models/racoon/model.obj"></a-asset-item>
+            <a-asset-item id="racoon-mtl" src="./Assets/models/racoon/materials.mtl"></a-asset-item> -->
             <a-asset-item id="table-obj" src="./Assets/models/PokerTable/PokerTable.obj"></a-asset-item>
             <a-asset-item id="table-gltf" src="./Assets/models/poker_table/table.gltf"></a-asset-item>
             
@@ -28,9 +33,11 @@
       <!-- <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="0.5 -1 1" rotation = '0 90 0'></a-entity>
       <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="0.5 -1 1" rotation = '0 180 0'></a-entity>
       <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1" rotation = '0 -90 0'></a-entity> -->
-      <a-entity position="0 0.5 3">
-          <a-camera></a-camera>
-      </a-entity>
+      <a-entity id='player'>
+          <a-camera id='camera'>
+              <a-obj-model src="#racoon-obj" mtl="#racoon-mtl" position="0 -0.5 3" scale="0.3 0.3 0.3"></a-obj-model>
+            </a-camera>
+        </a-entity>
       <a-obj-model src="#logo-obj" mtl="#logo-mtl" position="0 5 -15" scale="0.3 0.3 0.3"></a-obj-model>
       <a-obj-model src="#logo-obj" mtl="#logo-mtl" position="15 5 0" rotation = '0 -90 0' scale="0.3 0.3 0.3"></a-obj-model>
       <a-obj-model src="#logo-obj" mtl="#logo-mtl" position="0 5 15" rotation = '0 180 0' scale="0.3 0.3 0.3"></a-obj-model>

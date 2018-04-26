@@ -10,14 +10,31 @@ function makeid() {
   return text;
 }
 
+
 const playerPositions = {
   player1: {
-    position: '1 1 1',
-    rotation: '0 0 0'
+    position: {x:2.5,y: 0.5,z: 0},
+    rotation: '0 90 0'
   },
   player2: {
-    position: '5 0 -5',
-    rotation: '0 90 0'
+    position: {x:1.9,y: 0.5,z: -1.6},
+    rotation: '0 135 0'
+  },
+  player3: {
+    position:{x:0,y: 0.5,z: -2.5},
+    rotation: '0 180 0'
+  },
+  player4: {
+    position: {x:-1.9,y: 0.5,z: -1.6},
+    rotation: '0 225 0'
+  },
+  player5: {
+    position: {x:-2.5,y: 0.5,z: 0},
+    rotation: '0 270 0'
+  },
+  player6: {
+    position: {x:-1.9,y: 0.5,z: 1.6},
+    rotation: '0 315 0'
   },
 }
 
@@ -63,14 +80,19 @@ AFRAME.registerComponent('player-manager', {
     const {playerName, playerId} = newPlayer;
     if(this.playerId !== playerId) {
       let newPlayerRig = document.createElement('a-entity');
+      let positionWithOffset = playerPositions[playerName].position;
+      positionWithOffset.y+=1.6;
+      console.log(positionWithOffset);
       newPlayerRig.setAttribute('id', playerName);
       newPlayerRig.setAttribute('name', playerName);
-      newPlayerRig.setAttribute('position', playerPositions[playerName].position);
+      newPlayerRig.setAttribute('position', positionWithOffset);
       newPlayerRig.setAttribute('rotation', playerPositions[playerName].rotation);
-      let newPlayer = document.createElement('a-box');
+      let newPlayer = document.createElement('a-obj-model');
       newPlayer.setAttribute('id', playerId);
       newPlayer.setAttribute('rotation', newPlayer.rotation);
-      newPlayer.setAttribute('material', 'color: red');
+      newPlayer.setAttribute('scale', '5 5 5');
+      newPlayer.setAttribute('src', '#racoon-obj');
+      newPlayer.setAttribute('mtl', '#racoon-mtl');
       newPlayerRig.appendChild(newPlayer);
       this.el.appendChild(newPlayerRig);
     }

@@ -26,6 +26,16 @@ let gameData = {
             playerId: undefined,
             rotation: undefined,
             otherData: undefined
+        },
+        player5: {
+            playerId: undefined,
+            rotation: undefined,
+            otherData: undefined
+        },
+        player6: {
+            playerId: undefined,
+            rotation: undefined,
+            otherData: undefined
         }
     },
 };
@@ -33,6 +43,9 @@ let availablePlayers = {
     player1: false,
     player2: false,
     player3: false,
+    player4: false,
+    player5: false,
+    player6: false,
 }
 
 const findPlayer = () => {
@@ -52,6 +65,7 @@ io.on('connection', function (socket) {
   socket.on('newPlayer', function (data) {
     let newPlayerName = findPlayer();
     let playerId = data.playerId;
+    console.log('added player', newPlayerName);
     gameData.players[newPlayerName].playerId = playerId;
     socket.broadcast.emit("playerLogin", {playerName: newPlayerName, playerId, players: gameData.players});
     socket.emit("playerLogin", {playerName: newPlayerName, playerId, players: gameData.players});

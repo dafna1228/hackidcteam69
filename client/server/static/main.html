@@ -1,0 +1,58 @@
+<html>
+
+<head>
+  <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+  <script src="easyrtc/easyrtc.js"></script>
+  <script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js"></script>
+  <script src="playerManager.js"></script>
+
+  <script>
+      
+      function setPlace(){
+        
+      }
+
+    </script>
+
+
+</head>
+
+
+
+<body>
+  <a-scene networked-scene="
+    app: myApp;
+    room: room1;
+    debug: true;
+    onConnect: setPlace;   
+  ">
+    <a-assets>
+
+      <a-asset-item id="raccoon-obj" src="./racoon/model.obj"></a-asset-item>
+      <a-asset-item id="raccoon-mtl" src="./racoon/materials.mtl"></a-asset-item>
+
+      <template id="avatar-template">
+        <a-entity obj-model="obj: #raccoon-obj; mtl: #raccoon-mtl" scale="5 5 5"></a-entity>
+      </template>
+
+
+    </a-assets>
+
+    <img id="sky" src="https://img.gs/bbdkhfbzkk/2048x2048,stretch/http://i.imgur.com/WqlqEkq.jpg" crossorigin="anonymous" />
+
+    <a-entity id="player" networked="template:#avatar-template;attachTemplateToLocal:false;" camera position="0 1.3 0" wasd-controls 
+      look-controls></a-entity>
+
+    <script>
+      document.body.addEventListener('clientConnected', function (evt) {
+        console.log('clientConnected event. clientId =', evt.detail.clientId);
+      });
+    </script>
+
+    <a-sky id="image-360" radius="100" src="#sky" data-set-image-fade-setup="true" animation__fade=""></a-sky>
+
+  </a-scene>
+</body>
+
+</html>

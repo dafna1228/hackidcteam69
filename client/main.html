@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello, WebVR! - A-Frame</title>
+    <meta name="description" content="Hello, WebVR! - A-Frame">
+  <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
+  <script src="clientSocket.js"></script>
+  <script src="playerManager.js"></script>
+  <script src="cardGenerator.js"></script>
+
+</head>
+<body>
+  <a-scene player-manager>
+
+    <img id="sky" src="https://img.gs/bbdkhfbzkk/2048x2048,stretch/http://i.imgur.com/WqlqEkq.jpg" crossorigin="anonymous" />
+    <a-entity id='player'>
+      <a-camera id='camera'></a-camera>
+    </a-entity>
+
+    <a-sky id="image-360" radius="100" src="#sky" data-set-image-fade-setup="true" animation__fade=""></a-sky>
+
+  </a-scene>
+</body>
+
+</html>

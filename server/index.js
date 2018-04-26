@@ -22,15 +22,14 @@ app.get('/', function (req, res) {
 function startGame(){
     this.socket.emit('start game');
     table.StartGame();
-    socket.emit('playerTurn', { name: table.players[playerIndex % numOfPlayers].playerName});
-    
+    socket.emit('player turn', table); // should get current player in client side
 }
 
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
+  socket.emit('start session', {});
   socket.on('add player', function (data) {
     const name = data.playerName;
-    table.addPlayer(playerName, CHIPS);
+    table.addPlayer(name, CHIPS);
     socket.emit('player added');
     numOfPlayers++;
     if (numOfPlayers == table.minPlayers){
@@ -41,12 +40,25 @@ io.on('connection', function (socket) {
         startGame();
     }
   });
-  socket.on('playerAction', function (data){
-    
+  socket.on('player action', function (data){
+    const {action, playerName, amount} = data;
+    switch(action) {
+        case "bet":
+            table.bet(playerName, amount);
+            break;
+        case "check":
+            table.check(playerName);
+            break;
+        case "fold":
+            table.fold(playerName);
+        case "call":
+            table.call(playerName);
+            break;
+        case "allin":
+        if (playerName === this.players[table.currentPlayer].playerName){
+            table.players[table.currentPlayer].AllIn();
+        } 
+    }
+    socket.emit('player turn', table);
   })
-  socket.emit('playerTurn', { name: table.players[playerIndex % numOfPlayers].playerName });
-  playerIndex++;
-  // switch case for Check(), Fold(), Bet(bet), Call(), AllIn()
-  // emit table after the action
-  // timeout 
 });

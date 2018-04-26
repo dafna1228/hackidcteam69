@@ -1,5 +1,5 @@
 
-const socket = io.connect('http://localhost');
+const socket = io.connect('http://arcane-woodland-61478.herokuapp.com/');
 const MOVE_TIMEOUT = 60;
 const Player = {
     playerName: undefined,
@@ -13,16 +13,16 @@ const Player = {
     turnBet: { action: undefined, playerName: undefined, amount: undefined }, 
     table:
     Table = {
-        cardsOnTable: [Array],
+        cardsOnTable: [],
         smallBlind: undefined,
         bigBlind: undefined,
-        players: [Array],
+        players: [],
         dealer: undefined,
         minBuyIn: undefined,
         maxBuyIn: undefined,
         turnBet: {action: undefined, playerName: undefined, amount: undefined},
-        gameWinners: [Array],
-        gameLosers: [Array],
+        gameWinners: [],
+        gameLosers: [],
         game:
          Game = {
            smallBlind: undefined,
@@ -30,10 +30,10 @@ const Player = {
            pot: undefined,
            roundName: undefined,
            betName: undefined,
-           bets: [Array],
-           roundBets: [Array],
-           deck: [Array],
-           board: [Array] },
+           bets: [],
+           roundBets: [],
+           deck: [],
+           board: [] },
         currentPlayer: undefined }
          }
 

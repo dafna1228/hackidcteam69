@@ -2,6 +2,7 @@ let app = require('express')();
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
 let poker = require('./node-poker');
+const PORT = process.env.PORT || 3000;
 const TIMEOUT = 60000;
 const CHIPS = 1000;
 const SMALLBLIND = 50;
@@ -13,16 +14,16 @@ const MAXBUYIN = 200;
 let table = new poker.Table(SMALLBLIND, BIGBLIND, MINPLAYERS, MAXPLAYERS, MINBUYIN, MAXBUYIN);
 let playerIndex = 0;
 let numOfPlayers = 0;
-server.listen(80);
+server.listen(PORT);
 
 app.get('/', function (req, res) {
   res.status(200).send("OK");
 });
 
 function startGame(){
-    this.socket.emit('start game');
+    this.socket.broadcast.emit('start game');
     table.StartGame();
-    socket.emit('player turn', table);
+    socket.broadcast.emit('player turn', table);
 }
 
 io.on('connection', function (socket) {
@@ -30,7 +31,7 @@ io.on('connection', function (socket) {
   socket.on('add player', function (data) {
     const name = data.playerName;
     table.AddPlayer(name, CHIPS);
-    socket.emit('player added');
+    socket.broadcast.emit('player added');
     numOfPlayers++;
     if (numOfPlayers == table.minPlayers){
         setTimeout(startGame.bind(this), TIMEOUT);
@@ -59,6 +60,6 @@ io.on('connection', function (socket) {
             table.players[table.currentPlayer].AllIn();
         } 
     }
-    socket.emit('player turn', table);
+    socket.broadcast.emit('player turn', table);
   })
 });

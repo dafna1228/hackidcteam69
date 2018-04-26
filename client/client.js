@@ -1,5 +1,5 @@
 
-const socket = io.connect('http://arcane-woodland-61478.herokuapp.com/');
+const socket = io.connect('http://localhost');
 const MOVE_TIMEOUT = 60;
 const Player = {
     playerName: undefined,
@@ -13,16 +13,16 @@ const Player = {
     turnBet: { action: undefined, playerName: undefined, amount: undefined }, 
     table:
     Table = {
-        cardsOnTable: [],
+        cardsOnTable: [Array],
         smallBlind: undefined,
         bigBlind: undefined,
-        players: [],
+        players: [Array],
         dealer: undefined,
         minBuyIn: undefined,
         maxBuyIn: undefined,
         turnBet: {action: undefined, playerName: undefined, amount: undefined},
-        gameWinners: [],
-        gameLosers: [],
+        gameWinners: [Array],
+        gameLosers: [Array],
         game:
          Game = {
            smallBlind: undefined,
@@ -30,10 +30,10 @@ const Player = {
            pot: undefined,
            roundName: undefined,
            betName: undefined,
-           bets: [],
-           roundBets: [],
-           deck: [],
-           board: [] },
+           bets: [Array],
+           roundBets: [Array],
+           deck: [Array],
+           board: [Array] },
         currentPlayer: undefined }
          }
 
@@ -116,6 +116,7 @@ function allIn()
 
   // add player
   socket.on('start session', function add_player(){
+    console.log("started session");
     const name = prompt("Please enter your name", "Write Here");
     Player.playerName = name;
     const data = {"playerName": name};
@@ -135,12 +136,11 @@ function allIn()
   });
 
   // my turn
-  socket.on('player turn', function turn(TableObject){
-      Player.Table = TableObject;
+  socket.on('player turn', function turn(tableJSON){
       // if it's my turn
-    if (Player.Table.currentPlayer == Player.playerName){
+    if (tableJSON.currentPlayer == Player.playerName){
         // if the player doesnt choose action in 60 secs, send "call" action to the server
-        setTimeout(sendAction.bind(this, { action: 'call', playerName: Player.playerName}), TIMEOUT);
+        //setTimeout(sendAction.bind(this, { action: 'call', playerName: Player.playerName}), TIMEOUT);
         // put player action in this json
         sendAction({ action: 'call', playerName: Player.playerName})
         }

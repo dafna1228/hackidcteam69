@@ -14,7 +14,7 @@ const MAXBUYIN = 200;
 let table = new poker.Table(SMALLBLIND, BIGBLIND, MINPLAYERS, MAXPLAYERS, MINBUYIN, MAXBUYIN);
 let playerIndex = 0;
 let numOfPlayers = 0;
-server.listen(PORT);
+server.listen(()=>console.log(`listening on port ${PORT}`));
 
 app.get('/', function (req, res) {
   res.status(200).send("OK");
@@ -23,7 +23,7 @@ app.get('/', function (req, res) {
 function startGame(){
     this.socket.broadcast.emit('start game');
     table.StartGame();
-    socket.broadcast.emit('player turn', table);
+    socket.broadcast.emit('player turn', tableToJSON(table));
 }
 
 io.on('connection', function (socket) {
@@ -60,6 +60,43 @@ io.on('connection', function (socket) {
             table.players[table.currentPlayer].AllIn();
         } 
     }
-    socket.broadcast.emit('player turn', table);
+    socket.broadcast.emit('player turn', tableToJSON(table));
   })
 });
+
+function tableToJSON(table){
+    tableJSON = [];
+    playersJSON = [];
+    for (let i = 0; i < table.players.length; i++) {
+        playerJSON = {"playerName":table.players[i].playerName,
+                      "chips":table.players[i].chips,
+                      "folded":table.players[i].folded,
+                      "allIn":table.players[i].allIn,
+                      "talked":table.players[i].talked,
+                      "cards":table.players[i].cards,
+                      "turnBet":table.players[i].turnBet};
+       playersJSON[i] = playerJSON;
+    }   
+     tableJSON["players"] = playersJSON;
+     gameJSON = {"smallBlind":table.game.smallBlind,
+                 "bigBlind":table.game.bigBlind,
+                 "pot":table.game.pot,
+                 "roundName":table.game.roundName,
+                 "betName":table.game.betName,
+                 "bets":table.game.bets,
+                 "roundBets":table.game.roundBets,
+                 "deck":table.game.deck,
+                 "board":table.game.board
+                }
+    tableJSON["game"] = gameJSON;
+    tableJSON["currentPlayer"] = table.currentPlayer;          
+    tableJSON["minPlayers"] = table.minPlayers;
+    tableJSON["maxPlayers"] = table.maxPlayers;
+    tableJSON["dealer"] = table.dealer;
+    tableJSON["minBuyIn"] = table.minBuyIn;
+    tableJSON["maxBuyIn"] = table.maxBuyIn;
+    tableJSON["gameWinners"] = table.gameWinners;
+    tableJSON["gameLosers"] = table.gameLosers;
+    return tableJSON;
+    }
+

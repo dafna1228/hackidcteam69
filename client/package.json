@@ -1,0 +1,23 @@
+{
+  "name": "gametable-client",
+  "version": "0.0.1",
+  "description": "HackIDC Team 69 Client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dafna1228/hackidcteam69.git"
+  },
+  "keywords": [
+    "aframe",
+    "hackIDC"
+  ],
+  "author": "team69",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dafna1228/hackidcteam69/issues"
+  },
+  "homepage": "https://github.com/dafna1228/hackidcteam69#readme"
+}

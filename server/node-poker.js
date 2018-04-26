@@ -123,9 +123,9 @@ function checkForEndOfRound(table) {
     maxBet = getMaxBet(table.game.bets);
     //For each player, check
     for (i = 0; i < table.players.length; i += 1) {
-        if (table.players[i].folded === false) {
-            if (table.players[i].talked === false || table.game.bets[i] !== maxBet) {
-                if (table.players[i].allIn === false) {
+        if (table.players[i].folded === false) { // if the player folded
+            if (table.players[i].talked === false || table.game.bets[i] !== maxBet) { // if the player didn't talk or his bet isn't big enough
+                if (table.players[i].allIn === false) { // if the player didn't go all in
                   table.currentPlayer = i;
                   endOfRound = false;
                 }
@@ -779,6 +779,7 @@ Table.prototype.getEventEmitter = function() {
 Table.prototype.getCurrentPlayer = function(){
   return this.players[ this.currentPlayer ].playerName;
 };
+
 Table.prototype.getPreviousPlayerAction = function(){
   return this.turnBet;
 };

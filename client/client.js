@@ -8,9 +8,9 @@ const Player = {
     allIn: false,
     talked: true,
     // example for cards: [ '4H', '5S' ]
-    cards: [Array],
+    cards: [],
     // for example: { action: 'bet', playerName: 'jane', amount: 50 }
-    turnBet: { action: undefined, playerName: playerName, amount: undefined }, 
+    turnBet: { action: undefined, playerName: undefined, amount: undefined }, 
     table:
     Table = {
         cardsOnTable: [Array],
@@ -37,7 +37,7 @@ const Player = {
         currentPlayer: undefined }
          }
 
-
+/*
 //============================================
 //                 player logic
 //============================================
@@ -102,7 +102,7 @@ function allIn()
 
 
 
-
+*/
 
 //===========================================
 //                 sockets
@@ -124,7 +124,7 @@ function allIn()
 
   // tell player that he was added
   socket.on('player added', function player_added(player){
-    console.log("Added new player " + player.playerName);
+    console.log("Added new player " + Player.playerName);
   });
 
   // start game, get all player details

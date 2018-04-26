@@ -6,7 +6,28 @@ var io = require('socket.io')(server);
 server.listen(80, () => console.log('listening on port 80'));
 
 let gameData = {
-    players: {}
+    players: {
+        player1: {
+            playerId: undefined,
+            rotation:undefined,
+            otherData:undefined
+        },
+        player2: {
+            playerId: undefined,
+            rotation: undefined,
+            otherData: undefined
+        },
+        player3: {
+            playerId: undefined,
+            rotation: undefined,
+            otherData: undefined
+        },
+        player4: {
+            playerId: undefined,
+            rotation: undefined,
+            otherData: undefined
+        }
+    },
 };
 let availablePlayers = {
     player1: false,
@@ -23,7 +44,6 @@ const findPlayer = () => {
     }
 }
 
-
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
 });
@@ -32,11 +52,14 @@ io.on('connection', function (socket) {
   socket.on('newPlayer', function (data) {
     let newPlayerName = findPlayer();
     let playerId = data.playerId;
-    gameData.players[newPlayerName] = playerId;
-    console.log({playerName: newPlayerName, playerId});    
-    socket.emit("playerLogin", {playerName: newPlayerName, playerId});
-  })
-  socket.on('my other event', function (data) {
-    console.log(data);
+    gameData.players[newPlayerName].playerId = playerId;
+    socket.broadcast.emit("playerLogin", {playerName: newPlayerName, playerId, players: gameData.players});
+    socket.emit("playerLogin", {playerName: newPlayerName, playerId, players: gameData.players});
+    
   });
+  socket.on('updateRotation', function (data) {
+    const {playerId, playerName, rotation} =  data;
+    gameData.players[playerName].rotation = rotation;    
+    socket.broadcast.emit("updatePlayerRotation", {playerId, rotation});
+  })
 });

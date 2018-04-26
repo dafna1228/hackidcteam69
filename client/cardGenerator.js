@@ -14,7 +14,7 @@ AFRAME.registerComponent("playcard", {
     let data = this.data;
     let el = this.el;
 
-    this.geometry = new THREE.PlaneGeometry(6.35, 8.89, 1, 1);
+    this.geometry = new THREE.PlaneGeometry(1.05,1.6,1,1);
 
     this.textureFront = new THREE.TextureLoader().load(
       this.getFront(this.data.name).toString(),
@@ -41,13 +41,10 @@ AFRAME.registerComponent("playcard", {
       this.geometry.faceVertexUvs[0].push(this.geometry.faceVertexUvs[0][i].slice(0));
     }
 
-    console.log(this);
-
     var playcard = new THREE.Object3D();
     var mesh = new THREE.Mesh(this.geometry, new THREE.MeshFaceMaterial(this.materials));
     playcard.add(mesh);
 
-    console.log(this.el.object3D);
     el.setObject3D("mesh", playcard);
   },
 });

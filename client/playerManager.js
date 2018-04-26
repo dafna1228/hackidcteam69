@@ -1,5 +1,15 @@
 const bind = AFRAME.utils.bind;
 
+function makeid() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < 5; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
 const playerPositions = {
   player1: {
     position: '1 1 1',
@@ -18,7 +28,7 @@ AFRAME.registerComponent('playerManager', {
 
   init: function() {
     this.player = document.getElementById('player');
-    this.playerId = shortid.generate();
+    this.playerId = makeid();
     this.bindMethods();
     socket.emit('newPlayer', {id: playerId});
   },

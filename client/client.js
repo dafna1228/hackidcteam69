@@ -85,6 +85,16 @@ function CanPlayerCall(maxBet)
 
 }
 
+///param: the amount should not be less than maxBet and not more than player.chips
+function raise(amountRaised)
+{
+  player.talked=true;
+  player.chips -= amountRaised;
+  updateChipsScore(player.chips);
+  player.turnBet={action:"bet", playerName: player.playerName, amount: amountRaised};
+
+}
+
 
 function allIn()
 {
@@ -93,8 +103,15 @@ function allIn()
   
   player.turnBet={action:"allin" , playerName: player.playerName, amount: player.chips};
   player.chips=0;
-
+  updateChipsScore(0);
   //TODO:Send to server?
+}
+
+
+/* for changing the chips counter to the a new amount of chips */
+function updateChipsScore(amount)
+{
+
 }
 
 

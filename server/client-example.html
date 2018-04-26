@@ -1,31 +1,9 @@
 <html>
   <head>
+      <title>Hello, WebVR! - A-Frame</title>
+      <meta name="description" content="Hello, WebVR! - A-Frame"> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
-<script>
-  const socket = io.connect('http://localhost');
-  const myName;
-
-  // add player
-  socket.on('startSession', function add_player(socket){
-    const name = prompt("Please enter your name", "Write Here");
-    myName = name;
-    socket.emit("playerName", name); 
-  });
-  // start game, get all player details
-  socket.on('startGame', function getPlayerDetails(socket, playerObject){
-    // do things with player object- should contain :
-    // cards array, num chips, other player names, cards on table, etc... 
-  });
-
-  // my turn
-  socket.on('PlayerTurn', function turn(socket, playerTurn){
-    if (playerTurn == myName){
-      // it's my turn!
-
-    }
-    // cards array, num chips, other player names, cards on table, etc... 
-  });
-</script>
+<script src="../client/client.js"></script>
   </head>
   <body>
     Hello World

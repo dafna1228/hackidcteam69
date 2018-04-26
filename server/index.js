@@ -1,7 +1,7 @@
 let app = require('express')();
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
-require('node-poker');
+let poker = require('./node-poker');
 const TIMEOUT = 60000;
 const CHIPS = 1000;
 const SMALLBLIND = 50;
@@ -22,14 +22,14 @@ app.get('/', function (req, res) {
 function startGame(){
     this.socket.emit('start game');
     table.StartGame();
-    socket.emit('player turn', table); // should get current player in client side
+    socket.emit('player turn', table);
 }
 
 io.on('connection', function (socket) {
   socket.emit('start session', {});
   socket.on('add player', function (data) {
     const name = data.playerName;
-    table.addPlayer(name, CHIPS);
+    table.AddPlayer(name, CHIPS);
     socket.emit('player added');
     numOfPlayers++;
     if (numOfPlayers == table.minPlayers){

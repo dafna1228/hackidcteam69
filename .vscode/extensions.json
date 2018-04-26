@@ -1,9 +1,9 @@
 {
-  // See http://go.microsoft.com/fwlink/?LinkId=827846
-  // for the documentation about the extensions.json format
-  "recommendations": [
-    // Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
-    "CoenraadS.bracket-pair-colorizer",
+	// See http://go.microsoft.com/fwlink/?LinkId=827846
+	// for the documentation about the extensions.json format
+	"recommendations": [
+		// Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
+		"CoenraadS.bracket-pair-colorizer",
     "PKief.material-icon-theme",
     "Shan.code-settings-sync",
     "Zignd.html-css-class-completion",
@@ -35,5 +35,5 @@
     "xabikos.ReactSnippets",
     "zhuangtongfa.Material-theme",
     "jpoissonnier.vscode-styled-components"
-  ]
+	]
 }

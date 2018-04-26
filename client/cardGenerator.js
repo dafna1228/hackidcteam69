@@ -4,7 +4,10 @@ AFRAME.registerComponent('playcard', {
     },
 
     getFront: function (name) {
-        return;
+        let prefix = './Assets/cards-svg/';
+        let result = prefix.concat(name)
+        let sufix = '.svg'
+        return result.concat(sufix);
     },
   
     init: function () {

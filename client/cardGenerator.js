@@ -41,13 +41,10 @@ AFRAME.registerComponent("playcard", {
       this.geometry.faceVertexUvs[0].push(this.geometry.faceVertexUvs[0][i].slice(0));
     }
 
-    console.log(this);
-
     var playcard = new THREE.Object3D();
     var mesh = new THREE.Mesh(this.geometry, new THREE.MeshFaceMaterial(this.materials));
     playcard.add(mesh);
 
-    console.log(this.el.object3D);
     el.setObject3D("mesh", playcard);
   },
 });

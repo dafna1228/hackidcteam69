@@ -16,6 +16,7 @@ function Table(smallBlind, bigBlind, minPlayers, maxPlayers, minBuyIn, maxBuyIn)
     this.gameWinners = [];
     this.gameLosers = [];
     this.gameOver = false;
+    this.roundStarted = false;
 
     //Validate acceptable value ranges.
     var err;
@@ -944,6 +945,7 @@ Table.prototype.NewRound = function() {
   }
 
   this.eventEmitter.emit( "newRound" );
+  roundStarted = true;
 };
 
 Player.prototype.GetChips = function(cash) {

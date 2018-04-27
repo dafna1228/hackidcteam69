@@ -112,7 +112,6 @@ AFRAME.registerComponent('hud', {
     betLabel.setAttribute("position",".2 .5 0");
     betFrame.appendChild(betLabel); 
     betFrame.addEventListener('click', () => {
-        console.log(socket)
         socket.emit("playerAction",{action: 'bet', playerName: this.getPlayerName(), amount: 50})});
     },
 

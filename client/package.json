@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./server/easyrtc-server.js"
   },
-  "start": "index.js",
+  "start": "mockServer.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dafna1228/hackidcteam69.git"

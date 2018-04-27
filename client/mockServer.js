@@ -97,6 +97,9 @@ io.on('connection', function (socket) {
   socket.emit('start session', {});
   socket.on('newPlayer', function (data) {
     let newPlayerName = findPlayer();
+    if (!newPlayerName){
+        resetParameters();
+    }
     let playerId = data.playerId;
     console.log('added player', newPlayerName);
     gameData.players[newPlayerName].playerId = playerId;
@@ -164,6 +167,51 @@ socket.on('playerAction', function (data){
     return handsJSON;
 }
 */
+
+function resetParameters(){
+    gameData = {
+        players: {
+            player1: {
+                playerId: undefined,
+                rotation:undefined,
+                otherData:undefined
+            },
+            player2: {
+                playerId: undefined,
+                rotation: undefined,
+                otherData: undefined
+            },
+            player3: {
+                playerId: undefined,
+                rotation: undefined,
+                otherData: undefined
+            },
+            player4: {
+                playerId: undefined,
+                rotation: undefined,
+                otherData: undefined
+            },
+            player5: {
+                playerId: undefined,
+                rotation: undefined,
+                otherData: undefined
+            },
+            player6: {
+                playerId: undefined,
+                rotation: undefined,
+                otherData: undefined
+            }
+        },
+    };
+    availablePlayers = {
+        player1: false,
+        player2: false,
+        player3: false,
+        player4: false,
+        player5: false,
+        player6: false,
+    }
+}
 function tableToJSON(table){
     tableJSON = {};
     playersJSON = {};

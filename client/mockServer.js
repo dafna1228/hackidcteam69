@@ -79,8 +79,8 @@ app.get('/', function (req, res) {
 });
 
 function startGame(socket){
-    socket.broadcast.emit('start game');
-    socket.emit('start game');
+    socket.broadcast.emit('startGame');
+    socket.emit('startGame');
     table.StartGame();
     console.log("started game on server");
     socket.broadcast.emit('player turn', tableToJSON(table));
@@ -97,7 +97,7 @@ io.on('connection', function (socket) {
     console.log('added player', newPlayerName);
     gameData.players[newPlayerName].playerId = playerId;
     // add the player to the game
-    table.AddPlayer(playerId, CHIPS);
+    table.AddPlayer(playerName, CHIPS);
     socket.broadcast.emit("playerLogin", {playerName: newPlayerName, playerId, players: gameData.players});
     socket.emit("playerLogin", {playerName: newPlayerName, playerId, players: gameData.players});
     // start game of there are 4 players
@@ -105,6 +105,19 @@ io.on('connection', function (socket) {
     if (numOfPlayers == table.maxPlayers){
         startGame(socket);
     }
+    if (poker.checkForEndOfRound(table)){
+        socket.broadcast.emit("endRound")
+    } else if (table.roundStarted) {
+        socket.broadcast.emit("startRound")
+        table.roundStarted = false;
+   }
+   if (table.game.roundName == "Flop"){
+       socket.emit("revealFlop", data);
+   } else if (table.game.roundName == "Turn"){
+       socket.emit("revealTurn", data);
+   } else if (table.game.roundName == "River"){
+       socket.emit("revealRiver", data);
+   }
     
   });
   socket.on('updateRotation', function (data) {
@@ -177,5 +190,6 @@ function tableToJSON(table){
     tableJSON["gameWinners"] = table.gameWinners;
     tableJSON["gameLosers"] = table.gameLosers;
     tableJSON["gameOver"] = table.gameOver;
+    tableJSON["roundStarted"] = table.roundStarted;
     return tableJSON;
     }

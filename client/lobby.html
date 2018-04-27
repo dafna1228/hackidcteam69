@@ -8,6 +8,7 @@
     <script src="tableCenter.js"></script>
     <script src="clientSocket.js"></script>
     <script src="playerManager.js"></script>
+    <script src="HudGenerator.js"></script>
   </head>
   <body>
     <a-scene player-manager>
@@ -33,7 +34,7 @@
       <!-- <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="0.5 -1 1" rotation = '0 90 0'></a-entity>
       <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="0.5 -1 1" rotation = '0 180 0'></a-entity>
       <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1" rotation = '0 -90 0'></a-entity> -->
-      <a-entity id='player'>
+      <a-entity id='player' hudgenerator >
           <a-camera id='camera'>
               <a-obj-model src="#racoon-obj" mtl="#racoon-mtl" position="0 -0.5 3" scale="0.3 0.3 0.3"></a-obj-model>
             </a-camera>

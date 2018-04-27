@@ -49,7 +49,6 @@ AFRAME.registerComponent('player-manager', {
     this.gameData = {};
     this.rotation = new THREE.Vector3();
     this.bindMethods();
-    console.log('emit new player');
     socket.emit('newPlayer', {playerId: this.playerId});
   },
 

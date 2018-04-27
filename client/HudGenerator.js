@@ -18,59 +18,106 @@ AFRAME.registerComponent('hud', {
     let el= this.el;
     const {chips, currentBid} = this.data;
 
+    // info
     let HUDFrame = document.createElement('a-plane');
     HUDFrame.setAttribute('id', 'playerHUD');
     HUDFrame.setAttribute('color', '#777');
-    HUDFrame.setAttribute('material', 'opacity:0.6');
-    HUDFrame.setAttribute('position', '-2 0.4 -1');
+    HUDFrame.setAttribute('material', 'opacity:0.8');
+    HUDFrame.setAttribute('position', '-2.5 1 -2');
     HUDFrame.setAttribute('scale', '1 1 1');
     this.el.appendChild(HUDFrame);
     let chipsTextLabel=document.createElement('a-text');
         chipsTextLabel.setAttribute("id","chipsLabel");
-        chipsTextLabel.setAttribute("value","It's over 9000");
+        chipsTextLabel.setAttribute("value",this.getChipsString(chips));
+        chipsTextLabel.setAttribute("width","3");
         chipsTextLabel.setAttribute("color","black");
-        chipsTextLabel.setAttribute("position","0 0 0");
-        //chipsTextLabel.setAttribute("rotation","6.31 ")
-    //     chipsTextLabel.setAttribute("width","10");
+        chipsTextLabel.setAttribute("position","-.5 .4 0");
         HUDFrame.appendChild(chipsTextLabel);
-        
-
-    //     let currentBidTextLabel=document.createElement('a-text');
-    //     currentBidTextLabel.setAttribute("id","currentBitLabel");
-    //     currentBidTextLabel.setAttribute("value",data.currentBid);//TODO  the current bid
-    //     currentBidTextLabel.setAttribute("color","white");
-    //     currentBidTextLabel.setAttribute("position","0.93 3.12 -3.76");
-    //    // currentBidTextLabel.setAttribute("rotation","30 -36 0");
-    //     currentBidTextLabel.setAttribute("width","10");
-    //     //AFRAME.scenes[0].appendChild(textLabel);
-    //     this.el.appendChild(currentBidTextLabel);
-    let actionHUD = document.createElement('a-plane');
-    actionHUD.setAttribute('id', 'actionHUD');
-    actionHUD.setAttribute('color', '#777');
-    actionHUD.setAttribute('material', 'opacity:0.6');
-    actionHUD.setAttribute('position', '0 -0.4 -1');
-    actionHUD.setAttribute('scale', '2 0.3 0');
-    this.el.appendChild(actionHUD);    
-    let call = document.createElement('a-plane');
-    call.setAttribute('id', 'call');
-    call.setAttribute('color', '#A00');
-    call.setAttribute('material', 'opacity:0.6');
-    call.setAttribute('position', '-0.8 -0.4 -0.9');
-    call.setAttribute('scale', '0.2 0.1 0.1');
-    call.setAttribute('text', `value: Hello World`);
-    this.el.appendChild(call);        
+    let bindTextLabel=document.createElement('a-text');
+    bindTextLabel.setAttribute("id","bidLabel");
+    bindTextLabel.setAttribute("value",this.getBidString(currentBid));
+    bindTextLabel.setAttribute("width","3");
+    bindTextLabel.setAttribute("color","black");
+    bindTextLabel.setAttribute("position","-.5 .2 0");
+        HUDFrame.appendChild(bindTextLabel);
 
 
+    // Make Action Buttons
+
+    let callFrame = document.createElement('a-plane');
+    callFrame.setAttribute('id', 'callFrame');
+    callFrame.setAttribute('color', '#600');
+    callFrame.setAttribute('material', 'opacity:1');
+    callFrame.setAttribute('position', '-3.5 -1 -2');
+    callFrame.setAttribute('scale', '0.5 0.5 0');
+    this.el.appendChild(callFrame);
+    let callLabel=document.createElement('a-text');
+    callLabel.setAttribute("id","chipsLabel");
+    callLabel.setAttribute("value","Call");
+    callLabel.setAttribute("width","7");
+    callLabel.setAttribute("color","black");
+    callLabel.setAttribute("position","-.3 0 0");
+    callFrame.appendChild(callLabel); 
+    callFrame.addEventListener('click', () => socket.emit("playerAction",{action: 'call', playerName: this.getPlayerName(), amount: undefined}));
+
+    
+    let foldFrame = document.createElement('a-plane');
+    foldFrame.setAttribute('id', 'foldFrame');
+    foldFrame.setAttribute('color', '#00F');
+    foldFrame.setAttribute('material', 'opacity:1');
+    foldFrame.setAttribute('position', '-3 -1 -2');
+    foldFrame.setAttribute('scale', '0.5 0.5 0');
+    this.el.appendChild(foldFrame);
+    let foldLabel=document.createElement('a-text');
+    foldLabel.setAttribute("id","foldLabel");
+    foldLabel.setAttribute("value","Fold");
+    foldLabel.setAttribute("width","7");
+    foldLabel.setAttribute("color","black");
+    foldLabel.setAttribute("position","-.4 0 0");
+    foldFrame.appendChild(foldLabel); 
+    foldFrame.addEventListener('click', () => socket.emit("playerAction",{action: 'fold', playerName: this.getPlayerName(), amount: undefined}));
+
+    let checkFrame = document.createElement('a-plane');
+    checkFrame.setAttribute('id', 'checkFrame');
+    checkFrame.setAttribute('color', '#0D0');
+    checkFrame.setAttribute('material', 'opacity:1');
+    checkFrame.setAttribute('position', '-3.5 -0.5 -2');
+    checkFrame.setAttribute('scale', '0.5 0.5 0');
+    this.el.appendChild(checkFrame);
+    let checkLabel=document.createElement('a-text');
+    checkLabel.setAttribute("id","checkLabel");
+    checkLabel.setAttribute("value","Check");
+    checkLabel.setAttribute("width","7");
+    checkLabel.setAttribute("color","black");
+    checkLabel.setAttribute("position","-.4 0 0");
+    checkFrame.appendChild(checkLabel); 
+    checkFrame.addEventListener('click', () => socket.emit("playerAction",{action: 'check', playerName: this.getPlayerName(), amount: undefined}));
+
+    let betFrame = document.createElement('a-plane');
+    betFrame.setAttribute('id', 'betFrame');
+    betFrame.setAttribute('color', '#DD0');
+    betFrame.setAttribute('material', 'opacity:1');
+    betFrame.setAttribute('position', '-3 -0.5 -2');
+    betFrame.setAttribute('scale', '0.5 0.5 0');
+    this.el.appendChild(betFrame);
+    let betLabel=document.createElement('a-text');
+    betLabel.setAttribute("id","betLabel");
+    betLabel.setAttribute("value","Bet");
+    betLabel.setAttribute("width","7");
+    betLabel.setAttribute("color","black");
+    betLabel.setAttribute("position","-.4 0 0");
+    betFrame.appendChild(betLabel); 
+    betFrame.addEventListener('click', () => {
+        console.log(socket)
+        socket.emit("playerAction",{action: 'bet', playerName: this.getPlayerName(), amount: 50})});
+    },
+
+    getPlayerName: function() {
+        return AFRAME.scenes[0].components['player-manager'].playerName;
     },
 
     update: function () {
         let data = this.data;
-      
-        // chipsTextLabel= document.getElementById("chipsLabel");
-        // chipsTextLabel.setAttribute("value",data.chips);
-        // currentBidTextLabel =  document.getElementById("currentBitLabel");
-        // chipsTextLabel.setAttribute("value",data.currentBid);
-      //  textLabel.setAttribute("value",data.chipsCount);
 
     }
 

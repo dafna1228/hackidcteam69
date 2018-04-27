@@ -122,21 +122,34 @@ AFRAME.registerComponent('player-manager', {
   },
 
   dealCards: function (data){
-    let cards = document.createElement('a-entity');
-    AFRAME.utils.entity.setComponentProperty(cards, "cardHand",)
-
+    //TODO: Add the cards of the player to cards instead of placeholders
+    let cards;
+    // if(this.playerName === data.query){
+    //   cards = data.query;
+    // }
+    cards = {card1: '5S', card2:'AH'};
+    const handCards = document.getElementById('handCards');
+    AFRAME.utils.entity.setComponentProperty(handCards, "cardHand", {visible: true, cards});
   },
 
   showTableCenter: function (data){
-
-  },
-
-  showTurn: function (data){
-
-  },
-
-  showRiver: function (data){
-
+    const {board, round} = data;
+    let cards = {
+      flopA: {x: 0, card: board[0], turned: false },
+      flopB: {x: 0, card: board[1], turned: false },
+      flopC: {x: 0, card: board[2], turned: false },
+      turn: {x: 0, card: board[3], turned: true },
+      river: {x: 0, card: board[4], turned: true },
+    };
+    switch(phase) {
+      case 'River':{
+        cards.river.turned = false;
+      }
+      case 'Turn':{
+        cards.turn.turned = false;
+      }
+    }
+    AFRAME.utils.entity.setComponentProperty(tableCards, "cardHand", {visible: true, cards});    
   },
 
   runTurn: function(data){

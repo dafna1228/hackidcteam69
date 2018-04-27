@@ -106,21 +106,14 @@ io.on('connection', function (socket) {
     if (numOfPlayers == table.maxPlayers){
         startGame(socket);
     }
-    if (poker.checkForEndOfRound(table)){
-        socket.broadcast.emit("endRound")
+  });
+  if (poker.checkForEndOfRound(table)) {
+    socket.broadcast.emit("endRound")
+    socket.emit("changedRound", {tableCards: table.game.board, round: table.gameLosers.roundName});
     } else if (table.roundStarted) {
         socket.broadcast.emit("startRound")
         table.roundStarted = false;
-   }
-   if (table.game.roundName == "Flop"){
-       socket.emit("revealFlop", data);
-   } else if (table.game.roundName == "Turn"){
-       socket.emit("revealTurn", data);
-   } else if (table.game.roundName == "River"){
-       socket.emit("revealRiver", data);
-   }
-    
-  });
+    }
   socket.on('updateRotation', function (data) {
     const {playerId, playerName, rotation} =  data;
     gameData.players[playerName].rotation = rotation;    

@@ -79,9 +79,9 @@ app.get('/', function (req, res) {
 });
 
 function startGame(socket){
-    socket.broadcast.emit('startGame');
-    socket.emit('startGame');
     table.StartGame();
+    socket.broadcast.emit('startGame', tableToJSON(table));
+    socket.emit('startGame', tableToJSON(table));
     console.log("started game on server");
     socket.broadcast.emit('playerTurn', tableToJSON(table));
     socket.emit('playerTurn', tableToJSON(table));

@@ -1,5 +1,4 @@
 let socket = io('http://localhost');
-let gameTable;
 socket.on("playerLogin", (data) =>{
     let playerManager = AFRAME.scenes[0].components['player-manager'];
     while(!playerManager){
@@ -11,8 +10,7 @@ socket.on("playerLogin", (data) =>{
 socket.on("startGame", (data) => {
     // Lock Add Players
     // Add Spectators?
-    gameTable = data;
-    playerManager.dealCards(gameTable);
+    playerManager.s(data);
     console.log("Started game on client");
 });
 //socket.on("startRound", (data) => {
@@ -22,7 +20,7 @@ socket.on("playerTurn", (data)=> {
     playerManager.updateChips(data);
     playerManager.runTurn(data);
 })
-ocket.on("changedRound", (data) => {
+socket.on("changedRound", (data) => {
     playerManager.revealTableCenter(data); 
 });
 socket.on("gameOver", (data) => {

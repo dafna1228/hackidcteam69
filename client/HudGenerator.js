@@ -44,12 +44,26 @@ AFRAME.registerComponent('hud', {
     //     currentBidTextLabel.setAttribute("width","10");
     //     //AFRAME.scenes[0].appendChild(textLabel);
     //     this.el.appendChild(currentBidTextLabel);
-    
-    
+    let actionHUD = document.createElement('a-plane');
+    actionHUD.setAttribute('id', 'actionHUD');
+    actionHUD.setAttribute('color', '#777');
+    actionHUD.setAttribute('material', 'opacity:0.6');
+    actionHUD.setAttribute('position', '0 -0.4 -1');
+    actionHUD.setAttribute('scale', '2 0.3 0');
+    this.el.appendChild(actionHUD);    
+    let call = document.createElement('a-plane');
+    call.setAttribute('id', 'call');
+    call.setAttribute('color', '#A00');
+    call.setAttribute('material', 'opacity:0.6');
+    call.setAttribute('position', '-0.8 -0.4 -0.9');
+    call.setAttribute('scale', '0.2 0.1 0.1');
+    call.setAttribute('text', `value: Hello World`);
+    this.el.appendChild(call);        
+
+
     },
 
-
-    update: function(){
+    update: function () {
         let data = this.data;
       
         // chipsTextLabel= document.getElementById("chipsLabel");

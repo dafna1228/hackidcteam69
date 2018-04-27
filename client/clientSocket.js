@@ -23,14 +23,8 @@ socket.on("playerTurn", (data)=> {
     playerManager.updateChips(data);
     playerManager.runTurn(data);
 })
-ocket.on("revealFlop", (data) => {
-    playerManager.revealTableCenter('flop'); 
-});
-socket.on("revealTurn", (data) => {
-    playerManager.revealTableCenter('turn');
-});
-socket.on("revealRiver", (data) => {
-    playerManager.revealTableCenter('river');
+ocket.on("changedRound", (data) => {
+    playerManager.revealTableCenter(data); 
 });
 socket.on("endRound", (data) => {
     playerManager.showWinner(data);

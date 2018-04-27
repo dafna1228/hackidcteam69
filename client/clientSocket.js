@@ -21,7 +21,7 @@ socket.on("playerTurn", (data)=> {
     playerManager.updateChips(data);
     playerManager.runTurn(data);
 })
-ocket.on("changedRound", (data) => {
+socket.on("changedRound", (data) => {
     playerManager.revealTableCenter(data); 
 });
 socket.on("gameOver", (data) => {

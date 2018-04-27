@@ -3,11 +3,10 @@ AFRAME.registerComponent("card-hand", {
       layout: {
         type: "array",
         default: [
-          { i: "a", x: 0, y: 0, w: 1, card: "2S"},
-          { i: "b", x: 1, y: 0, w: 1, card: "3S"},
+          {x: 0, card: "2S"},
+          {x: 1, card: "3S"},
         ],
       },
-      marginColumn: { default: 0.3, min: 0, max: 1 },
     },
   
     init: function() {
@@ -21,45 +20,37 @@ AFRAME.registerComponent("card-hand", {
       this.putCards();
     },
   
-    // Creating the layout for every child
+    // Creating the layout for every card
     convertLayout: function() {
-      let margC = this.data.marginColumn;
-      this.aframeLayout = this.data.layout.map(function(child) {
+      let margC = 0.3;
+      this.aframeLayout = this.data.layout.map(function(card) {
         return {
-          i: child.i,
-          x: child.x + 0.5 * child.w + margC * child.x,
-          y: child.y,
-          card: child.card,
-          turned: child.turned,
+          x: card.x + 0.5 * 1 + margC * card.x,
+          y: 0,
+          card: card.card,
         };
       });
     },
   
     putCards: function() {
       const self = this;
-      let margC = this.data.marginColumn;
-      this.aframeLayout.map(function(child) {
-        let childEntity = document.createElement("a-entity");
-        childEntity.setAttribute("id", child.i);
+      let margC = 0.3;
+      this.aframeLayout.map(function(card) {
+        let cardEntity = document.createElement("a-entity");
+        cardEntity.setAttribute("id", card.x);
   
-        AFRAME.utils.entity.setComponentProperty(childEntity, "position", {
-          x: child.x - (1 + margC), // Adding the math to center it (with margin)
-          y: child.y, // There is 12/2 column and 11/2 margin needed to shift
+        AFRAME.utils.entity.setComponentProperty(cardEntity, "position", {
+          x: card.x - (1 + margC), // Adding the math to center it (with margin)
+          y: 1, // There is 12/2 column and 11/2 margin needed to shift
           z: 1, // Fixing the curve radius
         });
   
-        AFRAME.utils.entity.setComponentProperty(childEntity, "playcard", {
-          name: child.card,
+        AFRAME.utils.entity.setComponentProperty(cardEntity, "playcard", {
+          name: card.card,
         });
     
-        self.el.appendChild(childEntity);
+        self.el.appendChild(cardEntity);
       });
-    },
-  
-    removeTiles: function() {
-      while (this.el.firstChild) {
-        this.el.removeChild(this.el.firstChild);
-      }
     },
   
     remove: function() {

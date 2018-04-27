@@ -8,37 +8,45 @@ const CHIPS = 1000;
 const SMALLBLIND = 50;
 const BIGBLIND = 100;
 const MINPLAYERS = 2;
-const MAXPLAYERS = 6;
+const MAXPLAYERS = 4;
 const MINBUYIN = 100;
-const MAXBUYIN = 200;
+const MAXBUYIN = 2000;
 let table = new poker.Table(SMALLBLIND, BIGBLIND, MINPLAYERS, MAXPLAYERS, MINBUYIN, MAXBUYIN);
 let playerIndex = 0;
 let numOfPlayers = 0;
-server.listen(()=>console.log(`listening on port ${PORT}`));
+server.listen(PORT, ()=>console.log(`listening on port ${PORT}`));
 
 app.get('/', function (req, res) {
   res.status(200).send("OK");
+  self.send_header('Access-Control-Allow-Origin', '*')
 });
 
-function startGame(){
-    this.socket.broadcast.emit('start game');
+function startGame(socket){
+    socket.broadcast.emit('start game');
+    socket.emit('start game');
     table.StartGame();
+    console.log("started game on server");
     socket.broadcast.emit('player turn', tableToJSON(table));
+    socket.emit('player turn', tableToJSON(table));
+    console.log("It's " + table.currentPlayer + "'s turn");
 }
 
 io.on('connection', function (socket) {
+  console.log("can make connection");
   socket.emit('start session', {});
   socket.on('add player', function (data) {
     const name = data.playerName;
     table.AddPlayer(name, CHIPS);
     socket.broadcast.emit('player added');
+    socket.emit('player added');
+    console.log("server added player");
     numOfPlayers++;
-    if (numOfPlayers == table.minPlayers){
-        setTimeout(startGame.bind(this), TIMEOUT);
-    }
+    // if (numOfPlayers == table.minPlayers){
+    //     setTimeout(startGame.bind(this), TIMEOUT);
+    // }
     if (numOfPlayers == table.maxPlayers){
-        clearTimeout(startGame);
-        startGame();
+        //clearTimeout(startGame);
+        startGame(socket);
     }
   });
   socket.on('player action', function (data){
@@ -60,13 +68,19 @@ io.on('connection', function (socket) {
             table.players[table.currentPlayer].AllIn();
         } 
     }
-    socket.broadcast.emit('player turn', tableToJSON(table));
+    if (!table.gameOver){
+        socket.broadcast.emit('player turn', tableToJSON(table));
+        socket.emit('player turn', tableToJSON(table));
+    } else {
+        socket.broadcast.emit('game over', tableToJSON(table));
+        socket.emit('game over', tableToJSON(table));
+    }
   })
 });
 
 function tableToJSON(table){
-    tableJSON = [];
-    playersJSON = [];
+    tableJSON = {};
+    playersJSON = {};
     for (let i = 0; i < table.players.length; i++) {
         playerJSON = {"playerName":table.players[i].playerName,
                       "chips":table.players[i].chips,
@@ -97,6 +111,8 @@ function tableToJSON(table){
     tableJSON["maxBuyIn"] = table.maxBuyIn;
     tableJSON["gameWinners"] = table.gameWinners;
     tableJSON["gameLosers"] = table.gameLosers;
+    tableJSON["gameOver"] = table.gameOver;
     return tableJSON;
     }
+
 

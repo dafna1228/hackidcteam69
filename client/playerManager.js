@@ -120,5 +120,25 @@ AFRAME.registerComponent('player-manager', {
     if(this.playerId && this.playerName){
       socket.emit('updateRotation',{playerId: this.playerId, rotation: newRotation, playerName: this.playerName});
     }
-  }
+  },
+
+  dealCards: function (data){
+    let cards = document.createElement('a-entity');
+    AFRAME.utils.entity.setComponentProperty(cards, "cardHand",)
+
+  },
+
+  showTableCenter: function (data){
+
+  },
+
+  showTurn: function (data){
+
+  },
+
+  showRiver: function (data){
+
+  },
+
+
 });

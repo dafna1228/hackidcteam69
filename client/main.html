@@ -16,6 +16,17 @@
 
 <body>
   <a-scene player-manager>
+
+      <a-assets>
+          <a-asset-item id="logo-obj" src="./Assets/models/Logo/Logo.obj"></a-asset-item>
+          <a-asset-item id="logo-mtl" src="./Assets/models/Logo/Logo.mtl"></a-asset-item>
+      </a-assets>
+
+      <a-obj-model src="#logo-obj" mtl="#logo-mtl" position="0 5 -15" scale="0.3 0.3 0.3"></a-obj-model>
+
+      <a-entity obj-model="mtl: ./Assets/models/Logo/Logo.mtl; obj: ./Assets/models/Logo/Logo.obj; " position="0 -5 -15" scale="0.3 0.3 0.3"></a-entity>
+
+
     <a-entity id='player'>
       <a-camera id='camera'>
         <a-box></a-box>

@@ -1,6 +1,9 @@
 let socket = io('http://localhost');
 socket.on("playerLogin", (data) =>{
-    const playerManager = AFRAME.scenes[0].components['player-manager'];
+    let playerManager = AFRAME.scenes[0].components['player-manager'];
+    while(!playerManager){
+        playerManager = AFRAME.scenes[0].components['player-manager'];
+    }
     playerManager.addPlayer(data);
     playerManager.setPlayerName(data);
 })

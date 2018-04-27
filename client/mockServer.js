@@ -98,7 +98,7 @@ io.on('connection', function (socket) {
   socket.on('newPlayer', function (data) {
     let newPlayerName = findPlayer();
     if (!newPlayerName){
-        ResetParameters();
+        resetParameters();
     }
     let playerId = data.playerId;
     console.log('added player', newPlayerName);
@@ -168,7 +168,7 @@ socket.on('playerAction', function (data){
 }
 */
 
-function ResetParameters(){
+function resetParameters(){
     gameData = {
         players: {
             player1: {

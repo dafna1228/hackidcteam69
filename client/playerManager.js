@@ -49,6 +49,7 @@ AFRAME.registerComponent('player-manager', {
     this.gameData = {};
     this.rotation = new THREE.Vector3();
     this.bindMethods();
+    console.log('emit new player');
     socket.emit('newPlayer', {playerId: this.playerId});
   },
 
@@ -58,6 +59,8 @@ AFRAME.registerComponent('player-manager', {
     this.removePlayer = bind(this.removePlayer, this);
     this.updatePlayerRotation = bind(this.updatePlayerRotation, this);
     this.updateRotation = bind(this.updateRotation, this);
+    this.dealHands = bind(this.dealHands, this);
+    
   },
 
   setPlayerName: function (data) {
@@ -122,11 +125,12 @@ AFRAME.registerComponent('player-manager', {
   },
 
   dealCards: function (data){
+    console.log('dealing cards');
     //TODO: Add the cards of the player to cards instead of placeholders
     let cards;
-    // if(this.playerName === data.query){
-    //   cards = data.query;
-    // }
+    if(this.playerName === data){
+      cards = data.query;
+    }
     cards = {card1: '5S', card2:'AH'};
     const handCards = document.getElementById('handCards');
     AFRAME.utils.entity.setComponentProperty(handCards, "cardHand", {visible: true, cards});

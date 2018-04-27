@@ -17,6 +17,7 @@ const MAXBUYIN = 2000;
 let table = new poker.Table(SMALLBLIND, BIGBLIND, MINPLAYERS, MAXPLAYERS, MINBUYIN, MAXBUYIN);
 let playerIndex = 0;
 let numOfPlayers = 0;
+let isGameStarted =false;
 
 server.listen(80, () => console.log('listening on port 80'));
 
@@ -80,13 +81,10 @@ app.get('/', function (req, res) {
 
 function startGame(socket){
     table.StartGame();
-<<<<<<< HEAD
-    socket.broadcast.emit('startGame', tableToJSON(table));
-    socket.emit('startGame', tableToJSON(table));
-=======
+    console.log('game has started');
+    isGameStarted = true;
     socket.broadcast.emit('startGame', getPlayersHands());
     socket.emit('startGame', getPlayersHands());
->>>>>>> 521dd2859beeec1bc64c8dc5bebcc675062393b3
     console.log("started game on server");
     
     socket.broadcast.emit('playerTurn', tableToJSON(table));
@@ -112,7 +110,7 @@ io.on('connection', function (socket) {
         startGame(socket);
     }
   });
-  if (poker.checkForEndOfRound(table)) {
+  if (isGameStarted && poker.checkForEndOfRound(table)) {
     socket.broadcast.emit("endRound")
     socket.emit("changedRound", {tableCards: table.game.board, round: table.gameLosers.roundName});
     } else if (table.roundStarted) {

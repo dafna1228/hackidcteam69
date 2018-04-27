@@ -1072,3 +1072,4 @@ function rankHands(hands) {
 }
 
 exports.Table = Table;
+exports.checkForEndOfRound = checkForEndOfRound;

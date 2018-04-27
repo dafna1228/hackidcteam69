@@ -124,14 +124,9 @@ AFRAME.registerComponent('player-manager', {
     }
   },
 
-  dealCards: function (data){
+  dealCards: function (table){
     console.log('dealing cards');
-    //TODO: Add the cards of the player to cards instead of placeholders
-    let cards;
-    if(this.playerName === data){
-      cards = data.query;
-    }
-    cards = {card1: '5S', card2:'AH'};
+    cards = table.getHandForPlayerName(playerName);
     const handCards = document.getElementById('handCards');
     AFRAME.utils.entity.setComponentProperty(handCards, "cardHand", {visible: true, cards});
   },

@@ -1,7 +1,8 @@
 
-const socket = io.connect('http://localhost');
+const socket = io.connect('http://localhost:3000');
 const MOVE_TIMEOUT = 60;
-const Player = {
+let table;
+let Player = {
     playerName: undefined,
     chips: undefined,
     folded: false,
@@ -125,43 +126,34 @@ function allIn()
 
   // tell player that he was added
   socket.on('player added', function player_added(player){
-    console.log("Added new player " + Player.playerName);
+    console.log("Added new player on client: " + Player.playerName);
   });
 
   // start game, get all player details
-  socket.on('start game', function getPlayerDetails(playerObject){
+  socket.on('start game', function getPlayerDetails(tableJSON){
     // do things with player object- should contain :
     // cards array, num chips, other player names, cards on table, etc... 
-    Player = playerObject
+    table = tableJSON;
+    console.log("started game on client");
   });
 
   // my turn
   socket.on('player turn', function turn(tableJSON){
       // if it's my turn
-    if (tableJSON.currentPlayer == Player.playerName){
+    table = tableJSON;
+    console.log(table);
+    if (table.players[table.currentPlayer].playerName == Player.playerName){
         // if the player doesnt choose action in 60 secs, send "call" action to the server
         //setTimeout(sendAction.bind(this, { action: 'call', playerName: Player.playerName}), TIMEOUT);
         // put player action in this json
-        sendAction({ action: 'call', playerName: Player.playerName})
+        console.log("It's my turn: " + Player.playerName);
+        socket.emit("player action", { action: 'call', playerName: Player.playerName});
         }
     }
   );
 
-  // function to send the turn action to the socket
-  function sendAction(action_json){
-    this.socket.emit("player action", action_json)
-
-}
-
-
-
-
-
-
-
-  // show me the result of the turn
-  socket.on('TurnResult', function turn(PlayerObject){
-    //parse the result of the turn
-    Player = PlayerObject;
-
-  });
+  socket.on('game over', function(tableJSON){
+    table = tableJSON;
+    console.log("Game over");
+    console.log(table);
+  })

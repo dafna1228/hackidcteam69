@@ -15,6 +15,7 @@ function Table(smallBlind, bigBlind, minPlayers, maxPlayers, minBuyIn, maxBuyIn)
     this.turnBet = {};
     this.gameWinners = [];
     this.gameLosers = [];
+    this.gameOver = false;
 
     //Validate acceptable value ranges.
     var err;
@@ -30,7 +31,6 @@ function Table(smallBlind, bigBlind, minPlayers, maxPlayers, minBuyIn, maxBuyIn)
         return err;
     }
 }
-
 function Player(playerName, chips, table) {
     this.playerName = playerName;
     this.chips = chips;
@@ -699,7 +699,7 @@ function progress(table) {
                 }
                 checkForWinner(table);
                 checkForBankrupt(table);
-                table.eventEmitter.emit( "gameOver" );
+                table.gameOver = true;
             } else if (table.game.roundName === 'Turn') {
                 console.log('effective turn');
                 table.game.roundName = 'River';
@@ -879,9 +879,9 @@ Table.prototype.AddPlayer = function (playerName, chips) {
     var player = new Player(playerName, chips, this);
     this.playersToAdd.push( player );
   }
-  if ( this.players.length === 0 && this.playersToAdd.length >= this.minPlayers ){
-    this.StartGame();
-  }
+  //if ( this.players.length === 0 && this.playersToAdd.length >= this.minPlayers ){
+    //this.StartGame();
+  //}
 };
 Table.prototype.removePlayer = function (playerName){
   for( var i in this.players ){

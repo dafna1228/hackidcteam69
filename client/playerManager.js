@@ -82,7 +82,6 @@ AFRAME.registerComponent('player-manager', {
       let newPlayerRig = document.createElement('a-entity');
       let positionWithOffset = playerPositions[playerName].position;
       positionWithOffset.y+=1.6;
-      console.log(positionWithOffset);
       newPlayerRig.setAttribute('id', playerName);
       newPlayerRig.setAttribute('name', playerName);
       newPlayerRig.setAttribute('position', positionWithOffset);

@@ -18,7 +18,8 @@
   "keywords": [
     "express",
     "aframe",
-    "hackIDC"
+    "hackIDC",
+    "socket.io"
   ],
   "author": "team69",
   "license": "ISC",

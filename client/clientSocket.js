@@ -7,20 +7,18 @@ socket.on("playerLogin", (data) =>{
     playerManager.addPlayer(data);
     playerManager.setPlayerName(data);
 })
-socket.on("startGame", (hands) => {
+socket.on("startGame", (table) => {
     // Lock Add Players
     // Add Spectators?
     let playerManager = AFRAME.scenes[0].components['player-manager'];
     while(!playerManager){
         playerManager = AFRAME.scenes[0].components['player-manager'];
     }
-    console.log(hands);
-    playerManager.dealCards(hands);
+    //console.log(hands);
+    playerManager.dealCards(table);
     console.log("Started game on client");
 });
-//socket.on("startRound", (data) => {
 
-//})
 socket.on("playerTurn", (data)=> {
     let playerManager = AFRAME.scenes[0].components['player-manager'];
     while(!playerManager){

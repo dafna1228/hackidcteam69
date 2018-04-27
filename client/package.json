@@ -16,6 +16,7 @@
     "shortid": "^2.2.8"
   },
   "keywords": [
+    "express",
     "aframe",
     "hackIDC"
   ],

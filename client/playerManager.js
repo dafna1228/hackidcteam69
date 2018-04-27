@@ -152,4 +152,11 @@ AFRAME.registerComponent('player-manager', {
     AFRAME.utils.entity.setComponentProperty(tableCards, "cardHand", {visible: true, cards});    
   },
 
+  runTurn: function(data){
+    // socket.emit("playerAction", data);
+    // Data should be a json that contains: 
+    // * action (the options are: bet, check, fold, call, allin
+    // * playerName
+    // * amount (amount to bet - should be undefined in every action but the bet action)
+  },
 });

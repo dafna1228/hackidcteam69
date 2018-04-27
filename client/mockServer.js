@@ -83,8 +83,8 @@ function startGame(socket){
     socket.emit('startGame');
     table.StartGame();
     console.log("started game on server");
-    socket.broadcast.emit('player turn', tableToJSON(table));
-    socket.emit('player turn', tableToJSON(table));
+    socket.broadcast.emit('playerTurn', tableToJSON(table));
+    socket.emit('playerTurn', tableToJSON(table));
     console.log("It's " + table.currentPlayer + "'s turn");
 }
 
@@ -120,7 +120,7 @@ io.on('connection', function (socket) {
   })
 });
 
-io.on('player action', function (data){
+io.on('playerAction', function (data){
     const {action, playerName, amount} = data;
     switch(action) {
         case "bet":
@@ -131,6 +131,7 @@ io.on('player action', function (data){
             break;
         case "fold":
             table.fold(playerName);
+            socket.emit('removePlayer', table);
         case "call":
             table.call(playerName);
             break;
@@ -140,11 +141,11 @@ io.on('player action', function (data){
         } 
     }
     if (!table.gameOver){
-        socket.broadcast.emit('player turn', tableToJSON(table));
-        socket.emit('player turn', tableToJSON(table));
+        socket.broadcast.emit('playerTurn', tableToJSON(table));
+        socket.emit('playerTurn', tableToJSON(table));
     } else {
-        socket.broadcast.emit('game over', tableToJSON(table));
-        socket.emit('game over', tableToJSON(table));
+        socket.broadcast.emit('gameOver', tableToJSON(table));
+        socket.emit('gameOver', tableToJSON(table));
     }
   })
 

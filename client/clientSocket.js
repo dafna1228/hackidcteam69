@@ -15,10 +15,9 @@ socket.on("startGame", (data) => {
     playerManager.dealCards(gameTable);
     console.log("Started game on client");
 });
-socket.on("startRound", (data) => {
-  
-   
-})
+//socket.on("startRound", (data) => {
+
+//})
 socket.on("playerTurn", (data)=> {
     playerManager.updateChips(data);
     playerManager.runTurn(data);
@@ -26,10 +25,10 @@ socket.on("playerTurn", (data)=> {
 ocket.on("changedRound", (data) => {
     playerManager.revealTableCenter(data); 
 });
-socket.on("endRound", (data) => {
+socket.on("gameOver", (data) => {
     playerManager.showWinner(data);
     playerManager.discardCards(data);
-    playerManager.updateChips(data);
+    playerManager.updateChips(data); // Should show the pot going to the winner
 })
 socket.on("removePlayer", (data) =>{
     const playerManager = AFRAME.scenes[0].components['player-manager'];

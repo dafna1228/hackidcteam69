@@ -3,11 +3,10 @@ AFRAME.registerComponent("card-hand", {
       layout: {
         type: "array",
         default: [
-          { i: "a", x: 0, y: 0, w: 1, card: "2S"},
-          { i: "b", x: 1, y: 0, w: 1, card: "3S"},
+          {x: 0, card: "2S"},
+          {x: 1, card: "3S"},
         ],
       },
-      marginColumn: { default: 0.3, min: 0, max: 1 },
     },
   
     init: function() {
@@ -23,28 +22,26 @@ AFRAME.registerComponent("card-hand", {
   
     // Creating the layout for every child
     convertLayout: function() {
-      let margC = this.data.marginColumn;
+      let margC = 0.3;
       this.aframeLayout = this.data.layout.map(function(child) {
         return {
-          i: child.i,
-          x: child.x + 0.5 * child.w + margC * child.x,
-          y: child.y,
+          x: child.x + 0.5 * 1 + margC * child.x,
+          y: 0,
           card: child.card,
-          turned: child.turned,
         };
       });
     },
   
     putCards: function() {
       const self = this;
-      let margC = this.data.marginColumn;
+      let margC = 0.3;
       this.aframeLayout.map(function(child) {
         let childEntity = document.createElement("a-entity");
-        childEntity.setAttribute("id", child.i);
+        childEntity.setAttribute("id", child.x);
   
         AFRAME.utils.entity.setComponentProperty(childEntity, "position", {
           x: child.x - (1 + margC), // Adding the math to center it (with margin)
-          y: child.y, // There is 12/2 column and 11/2 margin needed to shift
+          y: 1, // There is 12/2 column and 11/2 margin needed to shift
           z: 1, // Fixing the curve radius
         });
   

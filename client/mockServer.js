@@ -80,9 +80,15 @@ app.get('/', function (req, res) {
 
 function startGame(socket){
     table.StartGame();
+<<<<<<< HEAD
     socket.broadcast.emit('startGame', tableToJSON(table));
     socket.emit('startGame', tableToJSON(table));
+=======
+    socket.broadcast.emit('startGame', getPlayersHands());
+    socket.emit('startGame', getPlayersHands());
+>>>>>>> 521dd2859beeec1bc64c8dc5bebcc675062393b3
     console.log("started game on server");
+    
     socket.broadcast.emit('playerTurn', tableToJSON(table));
     socket.emit('playerTurn', tableToJSON(table));
     console.log("It's " + table.currentPlayer + "'s turn");
@@ -149,6 +155,13 @@ io.on('playerAction', function (data){
     }
   })
 
+  function getPlayersHands(){
+    let handsJSON = {};
+    for (let i = 0; i < table.players.length; i++) {
+        handsJSON[i] = table.getHandForPlayerName(table.players[i].playerName);
+    }
+    return handsJSON;
+}
 
 function tableToJSON(table){
     tableJSON = {};

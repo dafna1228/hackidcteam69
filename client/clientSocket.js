@@ -7,10 +7,10 @@ socket.on("playerLogin", (data) =>{
     playerManager.addPlayer(data);
     playerManager.setPlayerName(data);
 })
-socket.on("startGame", (data) => {
+socket.on("startGame", (hands) => {
     // Lock Add Players
     // Add Spectators?
-    playerManager.s(data);
+    playerManager.dealCards(hands);
     console.log("Started game on client");
 });
 //socket.on("startRound", (data) => {

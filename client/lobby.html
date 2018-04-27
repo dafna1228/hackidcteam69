@@ -5,7 +5,9 @@
     <meta name="description" content="Hello, WebVR! - A-Frame">
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>    
+    <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
     <script src="tableCenter.js"></script>
+    <script src="cardGenerator.js"></script>
     <script src="clientSocket.js"></script>
     <script src="playerManager.js"></script>
   </head>
@@ -42,7 +44,9 @@
       <a-obj-model src="#logo-obj" mtl="#logo-mtl" position="15 5 0" rotation = '0 -90 0' scale="0.3 0.3 0.3"></a-obj-model>
       <a-obj-model src="#logo-obj" mtl="#logo-mtl" position="0 5 15" rotation = '0 180 0' scale="0.3 0.3 0.3"></a-obj-model>
       <a-obj-model src="#logo-obj" mtl="#logo-mtl" position="-15 5 0" rotation = '0 90 0' scale="0.3 0.3 0.3"></a-obj-model>
-      <a-gltf-model src="#table-gltf" position="0 0 0" scale="0.003 0.003 0.003"></a-gltf-model>
+      <a-entity table-center position='0 1.7 0' scale='0.4 0.4 0.4'></a-entity>                
+      <a-gltf-model src="#table-gltf" position="0 0 0" scale="0.003 0.003 0.003">
+      </a-gltf-model>
       <!-- <a-obj-model src="#table-obj" position="0 -1 -2" scale="0.003 0.003 0.003"></a-obj-model> -->
       <a-sky src="#sky"></a-sky>
     </a-scene>

@@ -110,6 +110,7 @@ io.on('connection', function (socket) {
         startGame(socket);
     }
   });
+
   if (isGameStarted && poker.checkForEndOfRound(table)) {
     socket.broadcast.emit("endRound")
     socket.emit("changedRound", {tableCards: table.game.board, round: table.gameLosers.roundName});
@@ -117,14 +118,14 @@ io.on('connection', function (socket) {
         socket.broadcast.emit("startRound")
         table.roundStarted = false;
     }
+
   socket.on('updateRotation', function (data) {
     const {playerId, playerName, rotation} =  data;
     gameData.players[playerName].rotation = rotation;    
     socket.broadcast.emit("updatePlayerRotation", {playerId, rotation});
-  })
-});
+  });
 
-io.on('playerAction', function (data){
+socket.on('playerAction', function (data){
     const {action, playerName, amount} = data;
     switch(action) {
         case "bet":
@@ -152,6 +153,8 @@ io.on('playerAction', function (data){
         socket.emit('gameOver', tableToJSON(table));
     }
   })
+});
+
 
   /*function getPlayersHands(){
     let handsJSON = {};

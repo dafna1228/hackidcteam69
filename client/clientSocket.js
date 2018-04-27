@@ -1,4 +1,4 @@
-let socket = io('http://localhost');
+let socket = io('http://arcane-woodland-61478.herokuapp.com');
 socket.on("playerLogin", (data) =>{
     let playerManager = AFRAME.scenes[0].components['player-manager'];
     while(!playerManager){

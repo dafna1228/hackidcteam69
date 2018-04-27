@@ -4,9 +4,9 @@ AFRAME.registerComponent("playcard", {
   },
 
   getFront: function(name) {
-    let prefix = "./Assets/cards-svg/";
+    let prefix = "./Assets/card-png/";
     let result = prefix.concat(name);
-    let sufix = ".svg";
+    let sufix = ".png";
     return result.concat(sufix);
   },
 
@@ -17,10 +17,10 @@ AFRAME.registerComponent("playcard", {
     this.geometry = new THREE.PlaneGeometry(1.05,1.6,1,1);
 
     this.textureFront = new THREE.TextureLoader().load(
-      this.getFront(this.data.name).toString(),
+      this.getFront(this.data.name),
     );
     this.textureBack = new THREE.TextureLoader().load(
-      "./Assets/cards-svg/Back.svg",
+      "./Assets/card-png/Back.png",
     );
 
     this.materials = [

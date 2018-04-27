@@ -11,8 +11,7 @@ socket.on("playerLogin", (data) =>{
 socket.on("startGame", (data) => {
     // Lock Add Players
     // Add Spectators?
-    gameTable = data;
-    playerManager.dealCards(gameTable);
+    playerManager.dealCards(hands);
     console.log("Started game on client");
 });
 //socket.on("startRound", (data) => {
